@@ -10,24 +10,54 @@ import android.view.View;
 
 public class MyActivity extends Activity {
 
-    Button button1;
+    Button clickedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        button1 = (Button) findViewById(R.id.button1);
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-                button1.setText("X");
-            }
-        });
-
-
     }
+
+        //button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                clickedButton = (Button) findViewById(v.getId());
+
+                // Perform action on click
+                switch (v.getId()) {
+                    case R.id.button1:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button2:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button3:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button4:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button5:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button6:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button7:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button8:
+                        clickedButton.setText("x");
+                        break;
+                    case R.id.button9:
+                        clickedButton.setText("x");
+                        break;
+                }
+            }
+        //}
+
+
 
 
     @Override
