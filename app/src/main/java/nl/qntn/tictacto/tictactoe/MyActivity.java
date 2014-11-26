@@ -57,6 +57,13 @@ public class MyActivity extends Activity {
             }
         //}
 
+    // tijdelijk oplossing later natuurlijk beter...
+    public void onClickReset(View v){
+        finish();
+        startActivity(getIntent());
+
+    }
+
 
 
 
