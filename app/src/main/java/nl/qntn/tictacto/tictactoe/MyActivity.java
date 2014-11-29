@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.Random;
+import java.util.logging.Handler;
 
 
 public class MyActivity extends Activity {
@@ -48,22 +49,128 @@ public class MyActivity extends Activity {
 
         clickedButton = (Button) findViewById(v.getId());
 
-        clickedButton.setText("x");
-
+        if (checkIfLeft()){
+            if(clickedButton.getText() != "o") {
+               if(clickedButton.getText() != "x") {
+                   clickedButton.setText("x");
+                   checkIfWin();
+                   checkIfLeft();
+                   computersTurn();
+                   checkIfWinComp();
+               }
+            }
+        }
+        if (checkIfLeft() == false){
+            Toast.makeText(getApplicationContext(),"Geen plek meer!",Toast.LENGTH_SHORT).show();
+        }
         if (checkIfWin()) {
-            Toast.makeText(getApplicationContext(),"You won! Baas!",Toast.LENGTH_LONG).show();
-        } else {
-            computersTurn();
+            Toast.makeText(getApplicationContext(), "You won! Baas!", Toast.LENGTH_SHORT).show();
+            for (int i = 0; i <9; i++){
+                allButtons[i].setEnabled(false);
+            }
+        }
+
+        if (checkIfWinComp()) {
+            Toast.makeText(getApplicationContext(), "You Lose!", Toast.LENGTH_SHORT).show();
+            for (int i = 0; i <9; i++){
+                allButtons[i].setEnabled(false);
+            }
         }
 
     }
 
-public boolean checkIfWin() {
+public boolean checkIfLeft(){
+    for(int i = 0; i<9 ; i++) {
+        if (allButtons[i].getText() == "") {
+            return true;
+        }
+    }
+    return false;
+}
 
-    // links recht check
-    if (allButtons[0].getText() == "x" && allButtons[1].getText() == "x" && allButtons[2].getText() == "x" )  {
+public boolean checkIfWinComp(){
+    int col = -1;
+    int row = -1;
+    int diag = -1;
+
+    //check de rijen
+
+    for (int j = 0, k = 0; j <3; j++, k+=3) {
+        if (allButtons[k].getText() == "o" && allButtons[k+1].getText() == "o" && allButtons[k+2].getText() == "o" )  {
+            row = j;
+        }
+    }
+
+    //check de kolommen
+
+    for (int i = 0; i < 3; i++) {
+        for(int k = 0; k<3 ; k++) {
+            if (allButtons[k].getText() == "o" && allButtons[k + 3].getText() == "o" && allButtons[k + 6].getText() == "o") {
+                col = k;
+            }
+        }
+    }
+
+    //check diagonalen
+
+    if (allButtons[0].getText() == "o" && allButtons[4].getText() == "o" && allButtons[8].getText() == "o") {
+        diag = 0;
+    } else  if (allButtons[2].getText() == "x" && allButtons[4].getText() == "x" && allButtons[6].getText() == "x") {
+        diag = 1;
+    }
+
+    //check of computer wint
+
+    if (col != -1 || row != -1 || diag != -1) {
         return true;
     }
+
+    return false;
+
+
+
+
+}
+
+public boolean checkIfWin() {
+    int col = -1;
+    int row = -1;
+    int diag = -1;
+
+    //check de rijen
+
+    for (int j = 0, k = 0; j <3; j++, k+=3) {
+            if (allButtons[k].getText() == "x" && allButtons[k+1].getText() == "x" && allButtons[k+2].getText() == "x" )  {
+                row = j;
+            }
+    }
+
+    //check de kolommen
+
+   for (int i = 0; i < 3; i++) {
+        for(int k = 0; k<3 ; k++) {
+            if (allButtons[k].getText() == "x" && allButtons[k + 3].getText() == "x" && allButtons[k + 6].getText() == "x") {
+                col = k;
+            }
+        }
+    }
+
+    //check diagonalen
+
+    if (allButtons[0].getText() == "x" && allButtons[4].getText() == "x" && allButtons[8].getText() == "x") {
+        diag = 0;
+    } else  if (allButtons[2].getText() == "x" && allButtons[4].getText() == "x" && allButtons[6].getText() == "x") {
+        diag = 1;
+    }
+
+
+
+    //check of speler wint
+
+    if (col != -1 || row != -1 || diag != -1) {
+        return true;
+    }
+
     return false;
 
 }
@@ -77,13 +184,18 @@ public boolean checkIfWin() {
 
         boolean computerZet = true;
 
-        while(computerZet) {
-            Random r = new Random();
-            int randGetal = r.nextInt(9- 0) + 0;
+        if (checkIfLeft()) {
+            if(!checkIfWin()) {
+                while (computerZet) {
+                    Random r = new Random();
+                    int randGetal = r.nextInt(9 - 0) + 0;
 
-            if (allButtons[randGetal].getText() != "x" && allButtons[randGetal].getText() != "o") {
-                allButtons[randGetal].setText("o");
-                computerZet = false;
+                    if (allButtons[randGetal].getText() != "x" && allButtons[randGetal].getText() != "o") {
+                        allButtons[randGetal].setText("o");
+                        computerZet = false;
+                    }
+
+                }
             }
         }
     }
